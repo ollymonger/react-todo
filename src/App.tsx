@@ -4,6 +4,8 @@ import iTodo from './models/iTodo'
 
 type FormElem = React.FormEvent<HTMLFormElement>
 
+const siteName = "TaskSheet";
+
 export default function App() {
   const [value, setValue] = useState<string>('');
   const [todos, setTodos] = useState<iTodo[]>([]); //stateful value > can change like a var
@@ -21,9 +23,12 @@ export default function App() {
     setTodos(parsed);
   }, [])
 
-  useEffect(() => { // runs whenever todo changes
+  useEffect(() => { // runs whenever todo changes    
+    const parsed = todos.length;
+    document.title = siteName+` | You have ${parsed} tasks`;
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
 
   const handleSubmit = (e: FormElem): void => {
     e.preventDefault();
