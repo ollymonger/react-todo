@@ -18,13 +18,14 @@ export default function App() {
       return;
     }
 
-    const parsed: ({ text: string, complete: boolean, date: string })[] = JSON.parse(loaded);
+    const parsed: ({ text: string, complete: boolean, due: string, created: string })[] = JSON.parse(loaded);
 
     const datesTransformed: Todo[] = parsed.map(value => {
       return {
         text: value.text,
         complete: value.complete,
-        date: new Date(value.date)
+        due: new Date(value.due),
+        created: new Date(value.created),
       };
     });
 
@@ -46,23 +47,29 @@ export default function App() {
   }
 
   const addTodo = (text: string, index: any): void => { //called when clicks
-    const newTodos: Todo[] = [...todos, { text, date: new Date(), complete: false }];
-   
+    const created = new Date();
+
+    const due = new Date();
+    due.setDate(created.getDate() + 5);
+
+    const newTodos: Todo[] = [...todos, { text, due, complete: false, created }];
+
     setTodos(newTodos);
   };
 
   const completeTodo = (index: number): void => {
     const newTodos: Todo[] = [...todos];
     newTodos[index].complete = !newTodos[index].complete;
+
     setTodos(newTodos);
   }
-    
+
   const removeTodo = (index: number): void => {
     const newTodos: Todo[] = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
   }
-  
+
   return (
     <div className="App" >
       <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Righteous|Roboto&display=swap" rel="stylesheet" />
@@ -78,10 +85,8 @@ export default function App() {
       </form>
       <section className="tasks">
         {todos.map((todo: Todo, index: number) => (
-          
-          
           <div className="task1" key={index} style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
-            <p>{todo.text}</p> <p className="date">{todo.date.toDateString()}</p>
+            <p>{todo.text}</p> <p className="date">{todo.created.toDateString()}</p>
             <button className="button" onClick={() => completeTodo(index)}>{todo.complete ? 'Incomplete' : 'Complete'}</button>
             <button className="button1" onClick={() => removeTodo(index)}>Delete</button>
           </div>

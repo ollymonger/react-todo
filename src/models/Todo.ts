@@ -1,5 +1,6 @@
 export default interface Todo {
     text: string;
     complete: boolean;
-    date: Date;
+    created: Date;
+    due: Date;
 }
