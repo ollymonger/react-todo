@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { TodoModel } from './models/TodoModel'
 import { Todo } from "./components/todo";
 
-import "./App.css"
+import { Button, TextField, Container, AppBar, Toolbar, IconButton, Typography, InputBase } from "@material-ui/core"
+import MenuIcon from '@material-ui/icons/Menu';
+import { fade, makeStyles } from '@material-ui/core/styles';
+
+import SearchIcon from '@material-ui/icons/Search';
+
+import './blankcss.css';
 
 type FormElem = React.FormEvent<HTMLFormElement>
 
-const dueDateMath = 5 * 5;
+const dueDateMath = 5;
 
 export interface taskProps {
   taskList: TodoModel;
@@ -78,33 +84,65 @@ const App: React.FunctionComponent = props => {
   }
 
   return (
-    <div className="App" >
-      <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Righteous|Roboto|Open+Sans+Condensed&display=swap" rel="stylesheet" />
-      <h1>TaskList</h1>
-      <form className="titlebox"onSubmit={handleSubmit}>
-        <input
-          type='text'
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-        />
-        
-      </form>
-      <form className="textbox" onSubmit={handleSubmit}>
-        <input
-          type='text'
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          required
-        />
-        
-      <button className="submit" type='submit'>Add Task</button>
-      </form>
-      <section className="tasks">
-        {todos.map((todo: TodoModel, index: number) => (
-          <Todo todo={todo} key={index} onComplete={() => completeTodo(index)} onRemove={() => removeTodo(index)} />
-        ))}
-      </section>
+    <div>
+      <div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="Open drawer"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Material-UI
+          </Typography>
+          <div >
+            <div >
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"          
+              inputProps={{ 'aria-label': 'Search' }}
+            />
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+    <Container maxWidth="sm">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Righteous|Roboto|Open+Sans+Condensed|Material+Icons&display=swap" rel="stylesheet" />
+        <h1 className="headericon">vertical_split</h1><h1>TaskList</h1>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            required
+            id="standard-required"
+            label="Todo Title"
+            helperText="Type your task title here."
+            type='text'
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
+
+          <TextField
+            required
+            id="standard-required"
+            label="Todo Body"
+            helperText="Type your task title here."
+            type='text'
+            value={value}
+            onChange={e => setValue(e.target.value)}
+
+          />
+
+          <Button type='submit' variant="outlined" color="secondary">Add Task</Button>
+        </form>
+        <section>
+          {todos.map((todo: TodoModel, index: number) => (
+            <Todo todo={todo} key={index} onComplete={() => completeTodo(index)} onRemove={() => removeTodo(index)} />
+          ))}
+        </section>
+        </Container>
     </div>
   );
 };

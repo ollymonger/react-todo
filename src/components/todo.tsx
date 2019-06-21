@@ -1,6 +1,8 @@
 import React from "react";
 import { TodoModel } from "../models/TodoModel";
 
+import { Button, TextField, Container, Grid } from "@material-ui/core"
+
 interface TodoProps {
     todo: TodoModel;
 
@@ -10,10 +12,12 @@ interface TodoProps {
 
 const Todo: React.FunctionComponent<TodoProps> = ({ todo, onComplete, onRemove }) => {
     return (
-        <div className="task1" style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
-            <p className="todoTitle">{todo.title}</p><p className="todoBody">{todo.text}</p> Due: <p className="date">{todo.due.toDateString()}</p>
-            <button className="button" onClick={onComplete}>{todo.complete ? 'Incomplete' : 'Complete'}</button>
-            <button className="button1" onClick={onRemove}>Delete</button>
+        <div style={{ textDecoration: todo.complete ? 'line-through' : '' }}>
+
+            <p>{todo.title}</p><p>{todo.text}</p> Due: <p>{todo.due.toDateString()}</p>
+            <Button color="primary" onClick={onComplete}>{todo.complete ? 'Incomplete' : 'Complete'}</Button>
+            <Button color="secondary" onClick={onRemove}>Delete</Button>
+
         </div>
     );
 };

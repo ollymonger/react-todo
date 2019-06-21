@@ -56,13 +56,9 @@
 
 .submit {
   font-family: 'PT Sans Narrow', sans-serif;
-  background: 0;
-  text-decoration: none;
-  position: abso;
-  left:-70px;
-  top:30px;
-  border: none;
-  font-size:20px;
+
+  position: relative;
+  top:-70px;
 }
 .todoBody {
   font-family: 'Open Sans Condensed', sans-serif;
@@ -82,8 +78,8 @@
 
 .textbox {
   position: relative;
-  margin-top:-27px;
-  margin-left:300px;
+  margin-top:-20px;
+  margin-left:299px;
 }
 .titlebox {
   position: relative;
