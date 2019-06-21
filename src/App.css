@@ -58,9 +58,36 @@
   font-family: 'PT Sans Narrow', sans-serif;
   background: 0;
   text-decoration: none;
-  position: absolute;
+  position: abso;
+  left:-70px;
+  top:30px;
   border: none;
   font-size:20px;
+}
+.todoBody {
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: rgb(187, 187, 187);
+  position: relative;
+  font-size:20px;
+  padding:10px;
+  margin-top:-30px;
+  margin-bottom:25px;
+  margin-left:-15px;
+}
+
+.todoTitle{
+  position: relative;
+  margin-left:-150px;
+}
+
+.textbox {
+  position: relative;
+  margin-top:-27px;
+  margin-left:300px;
+}
+.titlebox {
+  position: relative;
+  margin-right:200px;
 }
 
 .date {
@@ -68,6 +95,7 @@
   margin-top:-30px;
   margin-left:250px;
   color:white;
+  text-shadow: #073592 1.5px 1.5px ;
 }
 
 .submit:hover{
