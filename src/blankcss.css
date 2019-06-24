@@ -25,3 +25,7 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.daysText {
+  width:100px;
+}
