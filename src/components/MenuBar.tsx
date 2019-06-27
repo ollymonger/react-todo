@@ -1,5 +1,6 @@
 import React from 'react';
-import { Toolbar, Typography, InputBase} from "@material-ui/core"
+import { BrowserRouter as Route, Link } from "react-router-dom";
+import { Toolbar, Typography, InputBase } from "@material-ui/core"
 import { AppBar, Button } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -7,6 +8,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Tasklist } from './Tasklist';
+import { Home } from './Home';
 
 
 const useStyles = makeStyles(theme => ({
@@ -76,8 +79,10 @@ const MenuBar: React.FunctionComponent = props => {
               <MenuIcon />
           </Button>
               <Menu {...bindMenu(popupState)}>
-                <MenuItem onClick={popupState.close}>TaskLists</MenuItem>
-                <MenuItem onClick={popupState.close}>Coming</MenuItem>
+                <Link to="/"><MenuItem onClick={popupState.close}>Home</MenuItem></Link>     
+                <Link to="/Tasklist"><MenuItem onClick={popupState.close}>TaskLists</MenuItem></Link>                
+                <Route path="/" component={Home} />                
+                <Route path="/Tasklist" component={Tasklist} />
               </Menu>
             </React.Fragment>
           )}
