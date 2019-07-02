@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Route, Link } from "react-router-dom";
-import { Toolbar, Typography, InputBase } from "@material-ui/core"
+import { Toolbar, Typography, InputBase} from "@material-ui/core"
 import { AppBar, Button } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -73,23 +73,25 @@ const MenuBar: React.FunctionComponent = props => {
   return (
     <AppBar position="static">
       <Toolbar>
+
         <PopupState variant="popover" popupId="demo-popup-menu">
           {popupState => (
             <React.Fragment>
               <Button variant="contained" {...bindTrigger(popupState)}>
-              <MenuIcon />
-          </Button>
+                <MenuIcon />
+              </Button>
               <Menu {...bindMenu(popupState)}>
-                <Link to="/"><MenuItem onClick={popupState.close}>Home</MenuItem></Link>     
-                <Link to="/Tasklist"><MenuItem onClick={popupState.close}>TaskLists</MenuItem></Link>                
-                <Route path="/" component={Home} />                
+                <Link to="/"><MenuItem onClick={popupState.close}>Home</MenuItem></Link>
+                <Link to="/Tasklist"><MenuItem onClick={popupState.close}>TaskLists</MenuItem></Link>
+                <Route path="/" component={Home} />
                 <Route path="/Tasklist" component={Tasklist} />
               </Menu>
             </React.Fragment>
           )}
         </PopupState>
         <Typography className={classes.title} variant="h6" noWrap>| TaskLists
-          </Typography>
+        </Typography>
+        
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
@@ -104,8 +106,22 @@ const MenuBar: React.FunctionComponent = props => {
           />
         </div>
       </Toolbar>
+
     </AppBar>
   )
 };
 
 export { MenuBar };
+
+
+/*<React.Fragment>
+<PopupState variant="popover" popupId="demo-popup-menu">
+{popupState => (
+  <Box bgcolor="text.primary">
+    <Button {...bindTrigger(popupState)}>
+    </Button>
+    <Menu {...bindMenu(popupState)}><MenuItem>123</MenuItem></Menu>
+    {props => <Button {...props} />}
+  </Box>)}
+</PopupState>
+</React.Fragment>*/

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { TodoModel } from '../models/TodoModel'
 import { Todo } from "./todo";
-import { Button, TextField, Container } from "@material-ui/core"
+import { Button, TextField, Container, Snackbar } from "@material-ui/core"
+import { SnackbarOrigin } from "@material-ui/core/Snackbar"
+
 
 import * as firebase from "firebase/app";
 import "firebase/performance";
@@ -13,6 +15,7 @@ type FormElem = React.FormEvent<HTMLFormElement>
 export interface taskProps {
   taskList: TodoModel;
 }
+
 
 const firebaseConfig = {
   apiKey: "",
@@ -28,11 +31,22 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const perf = firebase.performance();
 
+export interface State extends SnackbarOrigin {
+  open: boolean;
+}
+
 const Tasklist: React.FunctionComponent = props => {
   const [value, setValue] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [dueMath, setDueMath] = useState<string>('');
   const [todos, setTodos] = useState<TodoModel[]>([]); //stateful value > can change like a var
+  const [state, setState] = React.useState<State>({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center'
+  });
+  const { vertical, horizontal, open } = state;
+
 
   useEffect(() => { // runs ones as no dependancies, just logic for component (like a func)
     const loaded = localStorage.getItem("todos");
@@ -79,9 +93,9 @@ const Tasklist: React.FunctionComponent = props => {
     const due = new Date();
     const dueM = Number(dueMath);
     due.setDate(created.getDate() + dueM);
-    const newTodos: TodoModel[] = [...todos, { title, dueMath, text, due, complete: false, created }];    
-    setTodos(newTodos);    
-    trace.incrementMetric('listTodos',todos.length);//tracing all todos
+    const newTodos: TodoModel[] = [...todos, { title, dueMath, text, due, complete: false, created }];
+    setTodos(newTodos);
+    trace.incrementMetric('listTodos', todos.length);//tracing all todos
     trace.stop();//trace stop
   };
 
@@ -90,7 +104,7 @@ const Tasklist: React.FunctionComponent = props => {
     const newTodos: TodoModel[] = [...todos];
     trace.start();//trace start
     newTodos[index].complete = !newTodos[index].complete;
-    setTodos(newTodos);    
+    setTodos(newTodos);
     trace.incrementMetric('numberOfTasks', todos.length); //number of tasks
     trace.stop(); //tracestop
   }
@@ -99,6 +113,14 @@ const Tasklist: React.FunctionComponent = props => {
     const newTodos: TodoModel[] = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+  }
+
+  const handleClick = (newState: SnackbarOrigin) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  function handleClose() {
+    setState({ ...state, open: false });
   }
 
   return (
@@ -113,21 +135,18 @@ const Tasklist: React.FunctionComponent = props => {
               id="standard-required"
               label="Todo Title"
               helperText="Type your task title here."
-              multiline
               type='text'
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
-
             <TextField
-              required
               id="standard-required"
               label="Todo Body"
               helperText="Type your task title here."
               type='text'
+              multiline
               value={value}
               onChange={e => setValue(e.target.value)}
-
             />
             <TextField
               className="daysText"
@@ -138,17 +157,25 @@ const Tasklist: React.FunctionComponent = props => {
               type='number'
               value={dueMath}
               onChange={e => setDueMath(e.target.value)}
-
             />
-            <Button type='submit' variant="outlined" color="secondary">Add Task</Button>
+            <Button type='submit' variant="outlined" color="secondary"  onClick={handleClick({ vertical: 'top', horizontal: 'right' })}>Add Task</Button>
           </form>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            key={`${vertical},${horizontal}`}
+            open={open}
+            onClose={handleClose}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">Task added to the list!</span>}
+          />
           <section>
             {todos.map((todo: TodoModel, index: number) => (
 
               <Todo todo={todo} key={index} onComplete={() => completeTodo(index)} onRemove={() => removeTodo(index)} />
 
             ))}
-
           </section>
         </Container>
       </div >
