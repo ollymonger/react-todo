@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { TodoModel } from '../models/TodoModel'
 import { Todo } from "./todo";
-import { Button, TextField, Container, Snackbar } from "@material-ui/core"
+import { Button, TextField, Container, Snackbar, Grid } from "@material-ui/core"
 import { SnackbarOrigin } from "@material-ui/core/Snackbar"
 
 
@@ -18,13 +18,13 @@ export interface taskProps {
 
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
+  apiKey: "AIzaSyBl9F1Fl7vPto4vi331udxeGyvWtTvp3G4",
+  authDomain: "react-todolist226.firebaseapp.com",
+  databaseURL: "https://react-todolist226.firebaseio.com",
+  projectId: "react-todolist226",
   storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  messagingSenderId: "488820852049",
+  appId: "1:488820852049:web:3058266de078ce65"
 };
 
 // Initialize Firebase
@@ -171,11 +171,17 @@ const Tasklist: React.FunctionComponent = props => {
             message={<span id="message-id">Task added to the list!</span>}
           />
           <section>
-            {todos.map((todo: TodoModel, index: number) => (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={2}>
+                  {todos.map((todo: TodoModel, index: number) => (
 
-              <Todo todo={todo} key={index} onComplete={() => completeTodo(index)} onRemove={() => removeTodo(index)} />
+                    <Todo todo={todo} key={index} onComplete={() => completeTodo(index)} onRemove={() => removeTodo(index)} />
 
-            ))}
+                  ))}
+                </Grid>
+              </Grid>
+            </Grid>
           </section>
         </Container>
       </div >
