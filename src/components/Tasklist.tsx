@@ -18,13 +18,13 @@ export interface taskProps {
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBl9F1Fl7vPto4vi331udxeGyvWtTvp3G4",
-  authDomain: "react-todolist226.firebaseapp.com",
-  databaseURL: "https://react-todolist226.firebaseio.com",
-  projectId: "react-todolist226",
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
   storageBucket: "",
-  messagingSenderId: "488820852049",
-  appId: "1:488820852049:web:3058266de078ce65"
+  messagingSenderId: "",
+  appId: ""
 };
 
 // Initialize Firebase
